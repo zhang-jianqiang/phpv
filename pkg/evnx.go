@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"errors"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -46,4 +47,23 @@ func SetPhpEnv(path string) error {
 	// 使用 PowerShell 设置用户级 PATH 环境变量
 	return exec.Command("powershell", "-Command",
 		"[System.Environment]::SetEnvironmentVariable('PATH', \""+newPath+"\", 'User')").Run()
+}
+
+func SetLink(target string) (err error) {
+	phpvHome := os.Getenv("PHPV_HOME")
+	if phpvHome == "" {
+		return errors.New("PHPV_HOME must be settled")
+	}
+
+	err = exec.Command("cmd", "/C", "rmdir", phpvHome).Run()
+	if err != nil {
+		return err
+	}
+
+	err = exec.Command("cmd", "/C", "mklink", "/D", phpvHome, target).Run()
+	if err != nil {
+		return errors.New("link error")
+	}
+
+	return nil
 }

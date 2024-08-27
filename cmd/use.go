@@ -36,12 +36,12 @@ var useCmd = &cobra.Command{
 
 		phpPath, err := pkg.ReadConfig()
 		if err != nil {
-			fmt.Println("php目录未配置，请先配置php目录, 例如: phpv config D:/phpstudy_pro/Extensions/php")
+			fmt.Println("php目录未配置, 请先配置php目录, 例如: phpv config D:/phpstudy_pro/Extensions/php")
 			return
 		}
 
 		newPhpEnv := filepath.Join(phpPath, args[0])
-		err = pkg.SetPhpEnv(newPhpEnv)
+		err = pkg.SetLink(newPhpEnv)
 		if err != nil {
 			fmt.Println(err.Error())
 			return

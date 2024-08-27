@@ -22,7 +22,7 @@ var configCmd = &cobra.Command{
 
 		err := pkg.SetConfig(args[0])
 		if err != nil {
-			fmt.Println("设置配置失败，请检查是否有权限")
+			fmt.Println("设置配置失败,请检查是否有权限")
 			return
 		}
 
