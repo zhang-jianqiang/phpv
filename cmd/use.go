@@ -8,8 +8,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/zhang-jianqiang/phpv/pkg"
 	"path/filepath"
-	"slices"
-	"strings"
 )
 
 // useCmd represents the use command
@@ -24,15 +22,20 @@ var useCmd = &cobra.Command{
 			return
 		}
 
-		if len(args) < 1 {
-			fmt.Println("版本为空")
-			return
+		// if len(args) < 1 {
+		// 	fmt.Println("版本为空")
+		// 	return
+		// }
+
+		selectedVersion, err := pkg.NewTeaModel(phpVersionItems)
+		if err != nil {
+			fmt.Println(err.Error())
 		}
 
-		if !slices.Contains(phpVersionItems, args[0]) {
-			fmt.Println("版本号输入错误, 支持的版本如下: " + strings.Join(args, "\r\n"))
-			return
-		}
+		// if !slices.Contains(phpVersionItems, args[0]) {
+		// 	fmt.Println("版本号输入错误, 支持的版本如下: " + strings.Join(args, "\r\n"))
+		// 	return
+		// }
 
 		phpPath, err := pkg.ReadConfig()
 		if err != nil {
@@ -40,13 +43,13 @@ var useCmd = &cobra.Command{
 			return
 		}
 
-		newPhpEnv := filepath.Join(phpPath, args[0])
+		newPhpEnv := filepath.Join(phpPath, selectedVersion)
 		err = pkg.SetLink(newPhpEnv)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
-		fmt.Println("Success!\r\nVersion: " + args[0])
+		fmt.Println("Success!\r\nVersion: " + selectedVersion)
 	},
 }
 
