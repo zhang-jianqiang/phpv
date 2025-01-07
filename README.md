@@ -13,7 +13,7 @@ go版本1.22
 源码安装
 
 ```shell
-go isntall github.com/zhang-jianqiang/phpv@latest
+go install github.com/zhang-jianqiang/phpv@latest
 ```
 
 二进制安装
